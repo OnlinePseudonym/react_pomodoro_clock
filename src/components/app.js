@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Timer from './timer';
 
 class App extends Component {
     constructor(props) {
@@ -6,6 +7,7 @@ class App extends Component {
 
         this.state = {
             pomodoro: 0,
+            isWork: true,
             work: 25,
             shortBreak: 5,
             longBreak: 30,
@@ -16,7 +18,7 @@ class App extends Component {
         return (
             <div>
                 <h1>Pomodoro timer</h1>
-                <div>25:00</div>
+                <Timer seconds={this.state.isWork ? this.state.work * 60 : this.state.shortBreak * 60} />
                 <ul>
                     <li>work</li>
                     <li>short break</li>
@@ -27,6 +29,11 @@ class App extends Component {
                     <li>work</li>
                     <li>long break</li>
                 </ul>
+                <div className="buttons">
+                    <button>Start Set</button>
+                    <button>Pause</button>
+                    <button>Reset Pomodoro</button>
+                </div>
             </div>
         )
     }
