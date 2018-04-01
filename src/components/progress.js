@@ -6,7 +6,7 @@ const Progress = (props) => {
     const output = [];
     for (let i = 0, len = content.length; i < len; i++) {
         if (currentStep > i) {
-            output.push(<li className="strike-through">{content[i]}</li>);
+            output.push(<li className="completed">{content[i]}</li>);
         } else if (currentStep === i) {
             output.push(<li className="active">{content[i]}</li>);
         } else {
