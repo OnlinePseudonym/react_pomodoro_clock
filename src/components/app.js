@@ -21,7 +21,7 @@ class App extends Component {
     handleRestart() {
         this.setState({
             completedPomodoros: 0,
-            isActive: true,
+            isActive: false,
             isWork: true,
         })
     }
@@ -50,7 +50,10 @@ class App extends Component {
             
             <div>
                 <h1>Pomodoro timer</h1>
-                {this.state.isActive && <Timer progressTimer={this.progressTimer} 
+                {this.state.isActive && <Timer
+                    progressTimer={this.progressTimer}
+                    completedPomodoros={this.state.completedPomodoros}
+                    isWork={this.state.isWork}
                     seconds={this.state.isWork ? this.state.work * 60 : 
                                                  this.state.completedPomodoros < 4 ? this.state.shortBreak * 60 :
                                                                            this.state.longBreak * 60} />

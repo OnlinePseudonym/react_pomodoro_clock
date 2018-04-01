@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Progress from './progress';
 
 class Timer extends Component {
     constructor(props) {
@@ -51,16 +52,7 @@ class Timer extends Component {
         return (
             <div className="timer">
                 <div className="display">{`${minutes}:${seconds}`}</div>
-                <ul>
-                    <li>work</li>
-                    <li>short break</li>
-                    <li>work</li>
-                    <li>short break</li>
-                    <li>work</li>
-                    <li>short break</li>
-                    <li>work</li>
-                    <li>long break</li>
-                </ul>
+                <Progress completedPomodoros={this.props.completedPomodoros} isWork={this.props.isWork}  />
                 <button onClick={this.handlePause}>{this.state.isPaused ? 'Resume' : 'Pause'}</button>
                 <button>Reset Pomodoro</button>
             </div>
