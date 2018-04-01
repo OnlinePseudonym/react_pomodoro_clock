@@ -5,36 +5,49 @@ class Timer extends Component {
         super(props);
 
         this.state = {
-            timer: props.seconds,
+            countdown: props.seconds,
+            isPaused: false,
         }
 
         this.timer = this.timer.bind(this);
+        this.handlePause = this.handlePause.bind(this);
     }
 
     componentDidMount() {
-        const countdown = setInterval(this.timer, 1000);
         this.setState({
-            countdown,
+            timer: setInterval(this.timer, 1000),
         });
     }
 
     componentWillUnmount() {
-        clearInterval(this.state.countdown);
+        clearInterval(this.state.timer);
     }
 
     timer() {
-        const count = this.state.timer - 1;
+        const count = this.state.countdown - 1;
         if(count >= 0) {
-            this.setState({ timer: count })
+            this.setState({ countdown: count })
         } else {
             this.props.progressTimer();
-            this.setState({ timer: this.props.seconds})
+            this.setState({ countdown: this.props.seconds})
         }
     }
 
+    handlePause() {
+        this.state.isPaused ? (
+            this.setState({
+                timer: setInterval(this.timer, 1000),
+                isPaused: false,
+            })
+        ) : (
+            clearInterval(this.state.timer),
+            this.setState({ isPaused : true, })
+        );
+    }
+
     render() {
-        const minutes = Math.floor((this.state.timer / 60).toString().padStart(2, '0'));
-        const seconds = (this.state.timer % 60).toString().padStart(2, '0');
+        const minutes = Math.floor((this.state.countdown / 60).toString().padStart(2, '0'));
+        const seconds = (this.state.countdown % 60).toString().padStart(2, '0');
         return (
             <div className="timer">
                 <div className="display">{`${minutes}:${seconds}`}</div>
@@ -48,6 +61,8 @@ class Timer extends Component {
                     <li>work</li>
                     <li>long break</li>
                 </ul>
+                <button onClick={this.handlePause}>{this.state.isPaused ? 'Resume' : 'Pause'}</button>
+                <button>Reset Pomodoro</button>
             </div>
         )
     }
