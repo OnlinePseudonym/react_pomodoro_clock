@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Timer from './timer';
 import Controls from './controls';
+import Waves from './waves';
 
 class App extends Component {
     constructor(props) {
@@ -13,6 +14,7 @@ class App extends Component {
             workDuration: 15,
             shortBreakDuration: 3,
             longBreakDuration: 25,
+            offset: 0,
         }
 
         this.progressTimer = this.progressTimer.bind(this);
@@ -21,6 +23,7 @@ class App extends Component {
         this.setShortBreak = this.setShortBreak.bind(this);
         this.setLongBreak = this.setLongBreak.bind(this);
         this.startTimer = this.startTimer.bind(this);
+        this.setOffset = this.setOffset.bind(this);
     }
 
     setWork(e) {
@@ -39,6 +42,17 @@ class App extends Component {
             isActive: false,
             isWork: true,
         })
+    }
+
+    setOffset(seconds) {
+        const height = document.querySelector('.app').offsetHeight;
+        const totalSeconds = this.state.isWork ? this.state.workDuration * 60 : 
+                                            this.state.completedPomodoros < 4 ? this.state.shortBreakDuration * 60 :
+                                                                                this.state.longBreakDuration * 60;
+        this.setState({
+            offset: height - (height * (seconds / (totalSeconds * 1.0))),
+        })
+        console.log(this.state.offset);
     }
 
     startTimer() {
@@ -67,22 +81,20 @@ class App extends Component {
     }
     
     render() {
-        return (
-            
+        const waveStyle = {
+            transform: 'translateY(0)'
+        };
+
+        return (    
             <div className="app">
-                <div className="sky">
-                    <div className="waves">
-                        <div className="wave wave-1" />
-                        <div className="wave wave-2" />
-                        <div className="wave wave-3" />
-                        <div className="wave wave-4" />
-                    </div>
-                </div>
+                <Waves style={waveStyle} offset={this.state.offset} />
                 <h1>Pomodoro timer</h1>
                 {this.state.isActive && <Timer
                     progressTimer={this.progressTimer}
                     completedPomodoros={this.state.completedPomodoros}
                     isWork={this.state.isWork}
+                    setTimeLeft={this.state.setTimeLeft}
+                    setOffset={this.setOffset}
                     seconds={this.state.isWork ? this.state.workDuration * 60 : 
                                                  this.state.completedPomodoros < 4 ? this.state.shortBreakDuration * 60 :
                                                                            this.state.longBreakDuration * 60} />

@@ -54,6 +54,7 @@ h1 {
   background: #005773;
   z-index: -1;
   margin-top: 60px;
+  transition: transform 1s linear;
 }
 
 .wave {
@@ -64,7 +65,6 @@ h1 {
   height: 50px;
   width: 1600px;
   animation: wave 8s linear infinite;
-  margin-left: -1rem;
 }
 .wave-2 {
   left: -90px;
@@ -107,6 +107,8 @@ h1 {
   display: grid;
   grid-template-rows: 1fr 2fr 1fr;
   justify-items: center;
+  grid-row: 2;
+  grid-column: 1;
 }
 
 .display {

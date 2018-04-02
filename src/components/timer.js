@@ -25,6 +25,7 @@ class Timer extends Component {
     }
 
     timer() {
+        this.props.setOffset(this.state.countdown);
         const count = this.state.countdown - 1;
         if(count >= 0) {
             this.setState({ countdown: count })
