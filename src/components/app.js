@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Timer from './timer';
+import Controls from './controls';
 
 class App extends Component {
     constructor(props) {
@@ -9,13 +10,27 @@ class App extends Component {
             completedPomodoros: 0,
             isActive: false,
             isWork: true,
-            work: .25,
-            shortBreak: .1,
-            longBreak: .5,
+            workDuration: 15,
+            shortBreakDuration: 3,
+            longBreakDuration: 25,
         }
 
         this.progressTimer = this.progressTimer.bind(this);
         this.handleRestart = this.handleRestart.bind(this);
+        this.setWork = this.setWork.bind(this);
+        this.setShortBreak = this.setShortBreak.bind(this);
+        this.setLongBreak = this.setLongBreak.bind(this);
+        this.startTimer = this.startTimer.bind(this);
+    }
+
+    setWork(e) {
+        this.setState({ workDuration: parseInt(e.target.value)});
+    }
+    setShortBreak(e) {
+        this.setState({ shortBreakDuration: parseInt(e.target.value)});
+    }
+    setLongBreak(e) {
+        this.setState({ longBreakDuration: parseInt(e.target.value)});
     }
 
     handleRestart() {
@@ -23,6 +38,12 @@ class App extends Component {
             completedPomodoros: 0,
             isActive: false,
             isWork: true,
+        })
+    }
+
+    startTimer() {
+        this.setState({
+            isActive: true,
         })
     }
 
@@ -48,18 +69,41 @@ class App extends Component {
     render() {
         return (
             
-            <div>
+            <div className="app">
+                <div className="sky">
+                    <div className="waves">
+                        <div className="wave wave-1" />
+                        <div className="wave wave-2" />
+                        <div className="wave wave-3" />
+                        <div className="wave wave-4" />
+                    </div>
+                </div>
                 <h1>Pomodoro timer</h1>
                 {this.state.isActive && <Timer
                     progressTimer={this.progressTimer}
                     completedPomodoros={this.state.completedPomodoros}
                     isWork={this.state.isWork}
-                    seconds={this.state.isWork ? this.state.work * 60 : 
-                                                 this.state.completedPomodoros < 4 ? this.state.shortBreak * 60 :
-                                                                           this.state.longBreak * 60} />
+                    seconds={this.state.isWork ? this.state.workDuration * 60 : 
+                                                 this.state.completedPomodoros < 4 ? this.state.shortBreakDuration * 60 :
+                                                                           this.state.longBreakDuration * 60} />
                     }
-                {(this.state.completedPomodoros === 0 && !this.state.isActive) && <button onClick={() => {this.setState({isActive:true})}}>Start Set</button> }
-                {(this.state.completedPomodoros >= 4 && !this.state.isActive) && <button onClick={this.handleRestart}>Start New Pomodoro Set</button> }
+                {(this.state.completedPomodoros === 0 && !this.state.isActive) && (
+                    <Controls
+                        setWork={this.setWork}
+                        setShortBreak={this.setShortBreak}
+                        setLongBreak={this.setLongBreak}
+                        workDuration={this.state.workDuration}
+                        shortBreakDuration={this.state.shortBreakDuration}
+                        longBreakDuration={this.state.longBreakDuration}
+                        startTimer={this.startTimer}
+                    />
+                )}
+                {(this.state.completedPomodoros >= 4 && !this.state.isActive) && (
+                    <div>
+                        <div>Completed</div>
+                        <button className="btn" onClick={this.handleRestart}>Start New Pomodoro Set</button>
+                    </div>
+                )}
             </div>
         )
     }

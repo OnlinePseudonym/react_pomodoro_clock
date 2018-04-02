@@ -53,8 +53,10 @@ class Timer extends Component {
             <div className="timer">
                 <div className="display">{`${minutes}:${seconds}`}</div>
                 <Progress completedPomodoros={this.props.completedPomodoros} isWork={this.props.isWork}  />
-                <button onClick={this.handlePause}>{this.state.isPaused ? 'Resume' : 'Pause'}</button>
-                <button>Reset Pomodoro</button>
+                <div>
+                    <button className="btn" onClick={this.handlePause}>{this.state.isPaused ? 'Resume' : 'Pause'}</button>
+                    <button className="btn">Reset</button>
+                </div>
             </div>
         )
     }
