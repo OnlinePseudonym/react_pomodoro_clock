@@ -11,7 +11,7 @@ A productivity timer built with React.
 
 ## Instructions
 
-[Live example](https://www.kevintreynolds.com/projects/pomodoro-timer)
+[Live example](https://www.kevintreynolds.com/projects/pomodoro_clock)
 
 To run locally clone this repository and run `
 npm install` from your terminal to install dependencies. 
