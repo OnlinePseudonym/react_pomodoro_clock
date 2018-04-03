@@ -12,6 +12,7 @@ class Timer extends Component {
 
         this.timer = this.timer.bind(this);
         this.handlePause = this.handlePause.bind(this);
+        this.handleReset = this.handleReset.bind(this);
     }
 
     componentDidMount() {
@@ -35,6 +36,15 @@ class Timer extends Component {
         }
     }
 
+    handleReset() {
+        this.props.reset();
+        this.setState({
+            countdown: this.props.seconds,
+            isPaused: false,
+            timer: setInterval(this.timer, 1000),
+        })
+    }
+
     handlePause() {
         this.state.isPaused ? (
             this.setState({
@@ -54,9 +64,9 @@ class Timer extends Component {
             <div className="timer">
                 <div className="display">{`${minutes}:${seconds}`}</div>
                 <Progress completedPomodoros={this.props.completedPomodoros} isWork={this.props.isWork}  />
-                <div>
+                <div className="btns">
                     <button className="btn" onClick={this.handlePause}>{this.state.isPaused ? 'Resume' : 'Pause'}</button>
-                    <button className="btn">Reset</button>
+                    <button className="btn" onClick={this.handleReset}>Reset</button>
                 </div>
             </div>
         )

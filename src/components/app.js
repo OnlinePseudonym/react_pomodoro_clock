@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Timer from './timer';
 import Controls from './controls';
 import Waves from './waves';
+import Completed from './completed';
 
 class App extends Component {
     constructor(props) {
@@ -24,6 +25,11 @@ class App extends Component {
         this.setLongBreak = this.setLongBreak.bind(this);
         this.startTimer = this.startTimer.bind(this);
         this.setOffset = this.setOffset.bind(this);
+        this.handleReset = this.handleReset.bind(this);
+    }
+
+    componentDidMount() {
+        this.setOffset(this.state.workDuration * 60);
     }
 
     setWork(e) {
@@ -44,6 +50,13 @@ class App extends Component {
         })
     }
 
+    handleReset() {
+        this.setState({
+            completedPomodoros: 0,
+            isWork: true,
+        })
+    }
+
     setOffset(seconds) {
         const height = document.querySelector('.app').offsetHeight;
         const totalSeconds = this.state.isWork ? this.state.workDuration * 60 : 
@@ -52,7 +65,6 @@ class App extends Component {
         this.setState({
             offset: height - (height * (seconds / (totalSeconds * 1.0))),
         })
-        console.log(this.state.offset);
     }
 
     startTimer() {
@@ -95,6 +107,7 @@ class App extends Component {
                     isWork={this.state.isWork}
                     setTimeLeft={this.state.setTimeLeft}
                     setOffset={this.setOffset}
+                    reset={this.handleReset}
                     seconds={this.state.isWork ? this.state.workDuration * 60 : 
                                                  this.state.completedPomodoros < 4 ? this.state.shortBreakDuration * 60 :
                                                                            this.state.longBreakDuration * 60} />
@@ -111,10 +124,7 @@ class App extends Component {
                     />
                 )}
                 {(this.state.completedPomodoros >= 4 && !this.state.isActive) && (
-                    <div>
-                        <div>Completed</div>
-                        <button className="btn" onClick={this.handleRestart}>Start New Pomodoro Set</button>
-                    </div>
+                    <Completed handleRestart={this.handleRestart} />
                 )}
             </div>
         )
