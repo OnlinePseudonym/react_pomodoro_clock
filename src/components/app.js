@@ -108,9 +108,12 @@ class App extends Component {
                     setTimeLeft={this.state.setTimeLeft}
                     setOffset={this.setOffset}
                     reset={this.handleReset}
-                    seconds={this.state.isWork ? this.state.workDuration * 60 : 
-                                                 this.state.completedPomodoros < 4 ? this.state.shortBreakDuration * 60 :
-                                                                           this.state.longBreakDuration * 60} />
+                    workDuration={this.state.workDuration}
+                    shortBreakDuration={this.state.shortBreakDuration}
+                    longBreakDuration={this.state.longBreakDuration}
+                    seconds={this.state.isWork            ? this.state.workDuration * 60       : 
+                        this.state.completedPomodoros < 4 ? this.state.shortBreakDuration * 60 :
+                                                            this.state.longBreakDuration * 60} />
                     }
                 {(this.state.completedPomodoros === 0 && !this.state.isActive) && (
                     <Controls

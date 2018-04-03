@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
 import Progress from './progress';
+import alert from '../sounds/alert.wav'
 
 class Timer extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            countdown: props.seconds,
+            countdown: this.props.seconds,
             isPaused: false,
         }
 
         this.timer = this.timer.bind(this);
         this.handlePause = this.handlePause.bind(this);
         this.handleReset = this.handleReset.bind(this);
+        this.formatTime = this.formatTime.bind(this);
     }
 
     componentDidMount() {
@@ -31,12 +33,16 @@ class Timer extends Component {
         if(count >= 0) {
             this.setState({ countdown: count })
         } else {
+            const audio = document.querySelector('.alert');
+            audio.currentTime = 0;
+            audio.play();
             this.props.progressTimer();
             this.setState({ countdown: this.props.seconds})
         }
     }
 
     handleReset() {
+        clearInterval(this.state.timer),
         this.props.reset();
         this.setState({
             countdown: this.props.seconds,
@@ -57,17 +63,28 @@ class Timer extends Component {
         );
     }
 
+    formatTime(seconds) {
+        const minutesOutput = Math.floor((seconds / 60).toString().padStart(2, '0'));
+        const secondsOutput = (seconds % 60).toString().padStart(2, '0');
+        return `${minutesOutput}:${secondsOutput}`
+    }
+
     render() {
-        const minutes = Math.floor((this.state.countdown / 60).toString().padStart(2, '0'));
-        const seconds = (this.state.countdown % 60).toString().padStart(2, '0');
         return (
             <div className="timer">
-                <div className="display">{`${minutes}:${seconds}`}</div>
-                <Progress completedPomodoros={this.props.completedPomodoros} isWork={this.props.isWork}  />
+                <div id="time-left" className="display">{this.formatTime(this.state.countdown)}</div>
+                <Progress
+                    completedPomodoros={this.props.completedPomodoros}
+                    isWork={this.props.isWork}
+                    formatTime={this.formatTime}
+                    workDuration={this.props.workDuration}
+                    shortBreakDuration={this.props.shortBreakDuration}
+                    longBreakDuration={this.props.longBreakDuration} />
                 <div className="btns">
                     <button className="btn" onClick={this.handlePause}>{this.state.isPaused ? 'Resume' : 'Pause'}</button>
-                    <button className="btn" onClick={this.handleReset}>Reset</button>
+                    <button id="reset" className="btn" onClick={this.handleReset}>Reset</button>
                 </div>
+                <audio src={alert} className="alert"></audio>
             </div>
         )
     }

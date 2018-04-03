@@ -73,16 +73,16 @@ const Progress = (props) => {
 		C599.553,140.077,599.138,129.52,592.37,123.265z M321.318,187.139v163.194h161.565
 		C482.885,250.949,407.481,187.139,321.318,187.139z"/>
 </g></svg>;
-    const content = [['work',computer],['short break',reddit],['work',computer],['short break',reddit],['work',computer],['short break',reddit],['work',computer],['long break',reddit]];
+    const content = [['work',computer,props.formatTime(props.workDuration * 60)],['break',reddit,props.formatTime(props.shortBreakDuration * 60)],['work',computer,props.formatTime(props.workDuration * 60)],['break',reddit,props.formatTime(props.shortBreakDuration * 60)],['work',computer,props.formatTime(props.workDuration * 60)],['break',reddit,props.formatTime(props.shortBreakDuration * 60)],['work',computer,props.formatTime(props.workDuration * 60)],['long break',reddit,props.formatTime(props.longBreakDuration * 60)]];
     const currentStep = (props.completedPomodoros * 2) - (props.isWork ? 0 : 1);
     const output = [];
     for (let i = 0, len = content.length; i < len; i++) {
         if (currentStep > i) {
-            output.push(<li className="completed">{checkMark}{content[i][0]}</li>);
+            output.push(<li className="completed">{checkMark}<span className="unit-desc">{content[i][0]}</span><span className="unit-time">{content[i][2]}</span></li>);
         } else if (currentStep === i) {
-            output.push(<li className="active">{timer}{content[i][0]}</li>);
+            output.push(<li id="timer-label" className="active">{timer}<span className="unit-desc">{content[i][0]}</span><span className="unit-time">{content[i][2]}</span></li>);
         } else {
-            output.push(<li>{content[i][1]}{content[i][0]}</li>)
+            output.push(<li>{content[i][1]}<span className="unit-desc">{content[i][0]}</span><span className="unit-time">{content[i][2]}</span></li>)
         }
     }
     return (
