@@ -78,11 +78,11 @@ const Progress = (props) => {
     const output = [];
     for (let i = 0, len = content.length; i < len; i++) {
         if (currentStep > i) {
-            output.push(<li className="completed">{checkMark}<span className="unit-desc">{content[i][0]}</span><span className="unit-time">{content[i][2]}</span></li>);
+            output.push(<li key={i} className="completed">{checkMark}<span className="unit-desc">{content[i][0]}</span><span className="unit-time">{content[i][2]}</span></li>);
         } else if (currentStep === i) {
-            output.push(<li id="timer-label" className="active">{timer}<span className="unit-desc">{content[i][0]}</span><span className="unit-time">{content[i][2]}</span></li>);
+            output.push(<li key={i} id="timer-label" className="active">{timer}<span className="unit-desc">{content[i][0]}</span><span className="unit-time">{content[i][2]}</span></li>);
         } else {
-            output.push(<li>{content[i][1]}<span className="unit-desc">{content[i][0]}</span><span className="unit-time">{content[i][2]}</span></li>)
+            output.push(<li key={i}>{content[i][1]}<span className="unit-desc">{content[i][0]}</span><span className="unit-time">{content[i][2]}</span></li>)
         }
     }
     return (

@@ -12,9 +12,9 @@ class App extends Component {
             completedPomodoros: 0,
             isActive: false,
             isWork: true,
-            workDuration: 15,
+            workDuration: 25,
             shortBreakDuration: 3,
-            longBreakDuration: 25,
+            longBreakDuration: 30,
             offset: 0,
         }
 
@@ -33,13 +33,13 @@ class App extends Component {
     }
 
     setWork(e) {
-        this.setState({ workDuration: parseInt(e.target.value)});
+        this.setState({ workDuration: parseInt(e.target.value, 10)});
     }
     setShortBreak(e) {
-        this.setState({ shortBreakDuration: parseInt(e.target.value)});
+        this.setState({ shortBreakDuration: parseInt(e.target.value, 10)});
     }
     setLongBreak(e) {
-        this.setState({ longBreakDuration: parseInt(e.target.value)});
+        this.setState({ longBreakDuration: parseInt(e.target.value, 10)});
     }
 
     handleRestart() {

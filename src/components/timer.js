@@ -42,7 +42,7 @@ class Timer extends Component {
     }
 
     handleReset() {
-        clearInterval(this.state.timer),
+        clearInterval(this.state.timer);
         this.props.reset();
         this.setState({
             countdown: this.props.seconds,
