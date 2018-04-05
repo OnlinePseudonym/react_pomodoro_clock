@@ -37,7 +37,7 @@ class Timer extends Component {
             audio.currentTime = 0;
             audio.play();
             this.props.progressTimer();
-            this.setState({ countdown: this.props.seconds})
+            this.setState({ countdown: this.props.seconds - 1})
         }
     }
 
