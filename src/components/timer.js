@@ -28,9 +28,9 @@ class Timer extends Component {
     }
 
     timer() {
-        this.props.setOffset(this.state.countdown);
         const count = this.state.countdown - 1;
         if(count >= 0) {
+            this.props.setOffset(this.state.countdown);
             this.setState({ countdown: count })
         } else {
             const audio = document.querySelector('.alert');
@@ -45,7 +45,7 @@ class Timer extends Component {
         clearInterval(this.state.timer);
         this.props.reset();
         this.setState({
-            countdown: this.props.seconds,
+            countdown: this.props.workDuration * 60,
             isPaused: false,
             timer: setInterval(this.timer, 1000),
         })
